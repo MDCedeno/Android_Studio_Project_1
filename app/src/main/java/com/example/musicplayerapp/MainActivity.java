@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.Collections;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private Handler mHandler;
     private Runnable mUpdateSeekbar;
+    private TextView elapsedTimeView, remainingTimeView;
     private final String[] musicFiles = {
             "chance", "choose", "rockstar", "back", "conviction",
             "dreaming", "free", "go", "grateful", "immortal",
@@ -56,12 +55,14 @@ public class MainActivity extends AppCompatActivity {
         ImageButton playPauseButton = findViewById(R.id.playPauseButton);
         ImageButton previousButton = findViewById(R.id.previousButton);
         ImageButton nextButton = findViewById(R.id.nextButton);
-        ImageButton shuffleButton = findViewById(R.id.shuffleButton); // Shuffle button
-        ImageButton repeatButton = findViewById(R.id.repeatButton); // Repeat button
+        ImageButton shuffleButton = findViewById(R.id.shuffleButton);
+        ImageButton repeatButton = findViewById(R.id.repeatButton);
         ImageButton dropdownButton = findViewById(R.id.dropdownButton);
         seekBar = findViewById(R.id.seekBar);
         trackImageView = findViewById(R.id.trackImageView);
-        titleView = findViewById(R.id.titleView); // Music title view
+        titleView = findViewById(R.id.titleView);
+        elapsedTimeView = findViewById(R.id.elapsedTime); // Elapsed time TextView
+        remainingTimeView = findViewById(R.id.remainingTime); // Remaining time TextView
         mHandler = new Handler();
 
         // Initialize MediaPlayer with the first track
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 if (fromUser && mediaPlayer != null) {
                     int newPosition = mediaPlayer.getDuration() * progress / 100;
                     mediaPlayer.seekTo(newPosition);
+                    updateTimerViews();
                 }
             }
 
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (mediaPlayer != null) {
                     mediaPlayer.start();
+                    updateTimerViews();
                 }
             }
         });
@@ -139,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         trackImageView.setImageResource(trackImages[currentTrackIndex]);
         titleView.setText(trackTitles[currentTrackIndex]);
         seekBar.setProgress(0);
+        updateTimerViews();
 
         // Set up completion listener to handle repeat and shuffle
         mediaPlayer.setOnCompletionListener(mp -> {
@@ -158,12 +162,14 @@ public class MainActivity extends AppCompatActivity {
         currentTrackIndex = (currentTrackIndex + 1) % musicFiles.length;
         initializeMediaPlayer();
         mediaPlayer.start();
+        updateTimerViews();
     }
 
     private void playPreviousTrack() {
         currentTrackIndex = (currentTrackIndex - 1 + musicFiles.length) % musicFiles.length;
         initializeMediaPlayer();
         mediaPlayer.start();
+        updateTimerViews();
     }
 
     private void updateSeekBar() {
@@ -174,11 +180,29 @@ public class MainActivity extends AppCompatActivity {
                     int currentPosition = mediaPlayer.getCurrentPosition();
                     int totalDuration = mediaPlayer.getDuration();
                     seekBar.setProgress(currentPosition * 100 / totalDuration);
+                    updateTimerViews();
                     mHandler.postDelayed(this, 1000);
                 }
             }
         };
         mHandler.post(mUpdateSeekbar);
+    }
+
+    private void updateTimerViews() {
+        if (mediaPlayer != null) {
+            int elapsedTime = mediaPlayer.getCurrentPosition();
+            int remainingTime = mediaPlayer.getDuration() - elapsedTime;
+
+            elapsedTimeView.setText(formatTime(elapsedTime)); // Update elapsed time
+            remainingTimeView.setText(formatTime(remainingTime)); // Update remaining time
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    private String formatTime(int milliseconds) {
+        int minutes = (milliseconds / 1000) / 60;
+        int seconds = (milliseconds / 1000) % 60;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
     @Override
