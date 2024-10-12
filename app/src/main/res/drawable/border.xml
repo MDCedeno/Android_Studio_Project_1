@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@android:color/white"/>
-    <stroke android:width="2dp" android:color="@android:color/darker_gray"/>
-    <corners android:radius="4dp"/>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:shape="rectangle">
+
+    <solid android:color="#3475ABA0"
+        tools:ignore="NewApi" /> <!-- Background color -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/black"/>
+    <corners android:radius="20dp"/> <!-- Rounded corners -->
 </shape>

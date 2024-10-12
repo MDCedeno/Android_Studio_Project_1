@@ -22,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.31"
+        app:layout_constraintVertical_bias="0.461"
         tools:ignore="UnusedAttribute" />
 
     <SeekBar
@@ -34,10 +34,10 @@
         android:thumbTint="#000000"
         app:layout_constraintBottom_toTopOf="@+id/playPauseButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackImageView"
-        app:layout_constraintVertical_bias="0.372" />
+        app:layout_constraintVertical_bias="0.741" />
 
     <ImageButton
         android:id="@+id/dropdownButton"
@@ -68,7 +68,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.894"
+        app:layout_constraintVertical_bias="0.922"
         app:srcCompat="@drawable/previous" />
 
     <ImageButton
@@ -83,7 +83,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.894"
+        app:layout_constraintVertical_bias="0.922"
         app:srcCompat="@drawable/play" />
 
     <ImageButton
@@ -98,7 +98,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/playPauseButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.894"
+        app:layout_constraintVertical_bias="0.922"
         app:srcCompat="@drawable/next" />
 
     <TextView
@@ -117,15 +117,16 @@
 
     <TextView
         android:id="@+id/appView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="169dp"
+        android:layout_height="44dp"
         android:text="@string/uni_music_player"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/titleView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintVertical_bias="0.783"
+        tools:ignore="TextSizeCheck" />
 
     <ImageButton
         android:id="@+id/shuffleButton"
@@ -139,7 +140,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.894"
+        app:layout_constraintVertical_bias="0.922"
         app:srcCompat="@drawable/shuffle" />
 
     <ImageButton
@@ -154,7 +155,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/nextButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.894"
+        app:layout_constraintVertical_bias="0.922"
         app:srcCompat="@drawable/repeat" />
 
     <ImageButton
@@ -186,7 +187,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackImageView"
-        app:layout_constraintVertical_bias="0.415"
+        app:layout_constraintVertical_bias="0.586"
         tools:ignore="TextContrastCheck" />
 
     <TextView
@@ -203,7 +204,24 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/seekBar"
         app:layout_constraintTop_toBottomOf="@+id/trackImageView"
-        app:layout_constraintVertical_bias="0.415"
+        app:layout_constraintVertical_bias="0.586"
         tools:ignore="TextContrastCheck" />
+
+    <ImageView
+        android:id="@+id/threeMView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_borders"
+        android:clipToOutline="true"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/appView"
+        app:layout_constraintEnd_toStartOf="@+id/selectionButton"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toEndOf="@+id/dropdownButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65"
+        app:srcCompat="@drawable/m"
+        tools:ignore="UnusedAttribute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

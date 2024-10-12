@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.thinker, R.drawable.titikman, R.drawable.women,
             R.drawable.wut, R.drawable.zesty
     };
+    private ImageSwitcher playPauseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                             currentTrackIndex = data.getIntExtra("selectedTrackIndex", 0);
                             initializeMediaPlayer();
                             mediaPlayer.start();
+                            playPauseButton.setImageResource(R.drawable.pause);
                         }
                     }
                 }
@@ -101,10 +104,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Previous button click listener
-        previousButton.setOnClickListener(v -> playPreviousTrack());
+        previousButton.setOnClickListener(v -> {
+            playPreviousTrack();
+            playPauseButton.setImageResource(R.drawable.pause);
+        });
 
         // Next button click listener
-        nextButton.setOnClickListener(v -> playNextTrack());
+        nextButton.setOnClickListener(v -> {
+            playNextTrack();
+            playPauseButton.setImageResource(R.drawable.pause);
+        });
 
         // Shuffle button click listener
         shuffleButton.setOnClickListener(v -> {
@@ -159,9 +168,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeMediaPlayer() {
         if (mediaPlayer != null) {
-            mediaPlayer.release();
+            mediaPlayer.release(); // Release any previously initialized MediaPlayer
         }
-        @SuppressLint("DiscouragedApi") int resourceId = getResources().getIdentifier(musicFiles[currentTrackIndex], "raw", getPackageName());
+        @SuppressLint("DiscouragedApi")
+        int resourceId = getResources().getIdentifier(musicFiles[currentTrackIndex], "raw", getPackageName());
         mediaPlayer = MediaPlayer.create(this, resourceId);
 
         // Change track image and title
@@ -169,6 +179,13 @@ public class MainActivity extends AppCompatActivity {
         titleView.setText(trackTitles[currentTrackIndex]);
         seekBar.setProgress(0);
         updateTimerViews();
+
+        // Start playing the track
+        // mediaPlayer.start();
+
+        // Update the play/pause button to show the pause icon since the music is playing
+        ImageButton playPauseButton = findViewById(R.id.playPauseButton); // Make sure to find the button if it's not a global variable
+        playPauseButton.setImageResource(R.drawable.play); // Set button to pause state
 
         // Set up completion listener to handle repeat and shuffle
         mediaPlayer.setOnCompletionListener(mp -> {
