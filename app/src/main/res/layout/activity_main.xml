@@ -217,10 +217,10 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/appView"
         app:layout_constraintEnd_toStartOf="@+id/selectionButton"
-        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dropdownButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@drawable/m"
         tools:ignore="UnusedAttribute" />
 
