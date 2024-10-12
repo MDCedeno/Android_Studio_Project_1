@@ -24,8 +24,8 @@
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="301dp"
-        android:layout_height="73dp"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
         android:max="100"
         android:progress="0"
         android:thumbTint="#000000"
@@ -168,5 +168,39 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/selection" />
+
+    <TextView
+        android:id="@+id/durationView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/duration"
+        android:textAlignment="gravity"
+        android:textColor="#37474F"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/playPauseButton"
+        app:layout_constraintEnd_toStartOf="@+id/seekBar"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trackImageView"
+        app:layout_constraintVertical_bias="0.415"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/remainingTimeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="@string/remaining"
+        android:textAlignment="gravity"
+        android:textColor="#37474F"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/playPauseButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/trackImageView"
+        app:layout_constraintVertical_bias="0.415"
+        tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
