@@ -1,6 +1,7 @@
 package com.example.musicplayerapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Random;
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isShuffle = false;
     private boolean isRepeat = false;
     private final Random random = new Random();
+    private ActivityResultLauncher<Intent> trackSelectorLauncher; // ActivityResultLauncher instead of startActivityForResult
 
     private final int[] trackImages = {
             R.drawable.mindset, R.drawable.thug, R.drawable.awkward,
@@ -58,12 +62,28 @@ public class MainActivity extends AppCompatActivity {
         ImageButton shuffleButton = findViewById(R.id.shuffleButton);
         ImageButton repeatButton = findViewById(R.id.repeatButton);
         ImageButton dropdownButton = findViewById(R.id.dropdownButton);
+        ImageButton selectTrackButton = findViewById(R.id.selectionButton); // New button for track selection
         seekBar = findViewById(R.id.seekBar);
         trackImageView = findViewById(R.id.trackImageView);
         titleView = findViewById(R.id.titleView);
         elapsedTimeView = findViewById(R.id.elapsedTime); // Elapsed time TextView
         remainingTimeView = findViewById(R.id.remainingTime); // Remaining time TextView
         mHandler = new Handler();
+
+        // Initialize ActivityResultLauncher for selecting tracks
+        trackSelectorLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            currentTrackIndex = data.getIntExtra("selectedTrackIndex", 0);
+                            initializeMediaPlayer();
+                            mediaPlayer.start();
+                        }
+                    }
+                }
+        );
 
         // Initialize MediaPlayer with the first track
         initializeMediaPlayer();
@@ -101,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
         // Dropdown button click listener (to minimize the entire application)
         dropdownButton.setOnClickListener(v -> {
             moveTaskToBack(true); // Minimize the entire application
+        });
+
+        // Select track button click listener (to open selection activity)
+        selectTrackButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
+            trackSelectorLauncher.launch(intent); // Use ActivityResultLauncher to start the activity
         });
 
         // SeekBar change listener
