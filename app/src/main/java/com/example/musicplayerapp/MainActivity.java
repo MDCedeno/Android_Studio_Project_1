@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.thinker, R.drawable.titikman, R.drawable.women,
             R.drawable.wut, R.drawable.zesty
     };
-    private ImageSwitcher playPauseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
