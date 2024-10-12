@@ -1,6 +1,15 @@
 <resources>
-    <string name="app_name">MusicPlayerApp</string>
-    <string name="play">Play</string>
-    <string name="todo">TODO</string>
-    <string name="Play">Play</string>
+    <string name="app_name">Uni Music Player Application</string>
+    <string name="title">Title</string>
+    <string name="uni_music_player">Uni Music Player</string>
+    <string name="media_playing">Play</string>
+    <string name="media_stop">Stop</string>
+    <string name="media_next">Next</string>
+    <string name="media_previous">Previous</string>
+    <string name="media_shuffle_on">Shuffle On</string>
+    <string name="media_shuffle_off">Shuffle Off</string>
+    <string name="media_repeat_on">Repeat On</string>
+    <string name="media_repeat_off">Repeat Off</string>
+    <string name="media_minimized">Minimized</string>
+    <string name="media_selection">Albums</string>
 </resources>

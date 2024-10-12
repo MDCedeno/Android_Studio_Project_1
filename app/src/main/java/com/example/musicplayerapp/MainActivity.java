@@ -1,13 +1,17 @@
 package com.example.musicplayerapp;
 
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Collections;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,15 +19,33 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private Handler mHandler;
     private Runnable mUpdateSeekbar;
-    private String[] musicFiles = {"sample1", "sample2", "sample3"}; // Add more file names without extension
-    private int currentTrackIndex = 0; // To track the current track
-    private ImageView trackImageView; // ImageView for track image
+    private final String[] musicFiles = {
+            "chance", "choose", "rockstar", "back", "conviction",
+            "dreaming", "free", "go", "grateful", "immortal",
+            "kill", "king", "legendary", "life", "me",
+            "never", "purpose", "rumors", "war", "way"
+    };
+    private final String[] trackTitles = {
+            "Chance", "Choose", "Rockstar", "Back", "Conviction",
+            "Dreaming", "Free", "Go", "Grateful", "Immortal",
+            "Kill", "King", "Legendary", "Life", "Me",
+            "Never", "Purpose", "Rumors", "War", "Way"
+    };
+    private int currentTrackIndex = 0;
+    private ImageView trackImageView;
+    private TextView titleView;
+    private boolean isShuffle = false;
+    private boolean isRepeat = false;
+    private final Random random = new Random();
 
-    // Array for track images
-    private int[] trackImages = {
-            R.drawable.mindset, // Image for sample1
-            R.drawable.thug, // Image for sample2
-            R.drawable.awkward  // Image for sample3
+    private final int[] trackImages = {
+            R.drawable.mindset, R.drawable.thug, R.drawable.awkward,
+            R.drawable.peace, R.drawable.bayani, R.drawable.bossing,
+            R.drawable.daddy, R.drawable.gavin, R.drawable.gwenchana,
+            R.drawable.huh, R.drawable.nani, R.drawable.omg,
+            R.drawable.sad, R.drawable.slap, R.drawable.sus,
+            R.drawable.thinker, R.drawable.titikman, R.drawable.women,
+            R.drawable.wut, R.drawable.zesty
     };
 
     @Override
@@ -31,45 +53,53 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button playPauseButton = findViewById(R.id.playPauseButton);
-        Button previousButton = findViewById(R.id.previousButton);
-        Button nextButton = findViewById(R.id.nextButton);
+        ImageButton playPauseButton = findViewById(R.id.playPauseButton);
+        ImageButton previousButton = findViewById(R.id.previousButton);
+        ImageButton nextButton = findViewById(R.id.nextButton);
+        ImageButton shuffleButton = findViewById(R.id.shuffleButton); // Shuffle button
+        ImageButton repeatButton = findViewById(R.id.repeatButton); // Repeat button
+        ImageButton dropdownButton = findViewById(R.id.dropdownButton);
         seekBar = findViewById(R.id.seekBar);
-        trackImageView = findViewById(R.id.trackImageView); // Initialize ImageView
+        trackImageView = findViewById(R.id.trackImageView);
+        titleView = findViewById(R.id.titleView); // Music title view
         mHandler = new Handler();
 
         // Initialize MediaPlayer with the first track
         initializeMediaPlayer();
 
         // Play/Pause button click listener
-        playPauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
-                    playPauseButton.setText("Play");
-                } else {
-                    mediaPlayer.start();
-                    playPauseButton.setText("Pause");
-                    updateSeekBar();
-                }
+        playPauseButton.setOnClickListener(v -> {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                playPauseButton.setImageResource(R.drawable.play);
+            } else {
+                mediaPlayer.start();
+                playPauseButton.setImageResource(R.drawable.pause);
+                updateSeekBar();
             }
         });
 
         // Previous button click listener
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playPreviousTrack();
-            }
-        });
+        previousButton.setOnClickListener(v -> playPreviousTrack());
 
         // Next button click listener
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playNextTrack();
-            }
+        nextButton.setOnClickListener(v -> playNextTrack());
+
+        // Shuffle button click listener
+        shuffleButton.setOnClickListener(v -> {
+            isShuffle = !isShuffle; // Toggle shuffle state
+            shuffleButton.setImageResource(isShuffle ? R.drawable.shuffleon : R.drawable.shuffle);
+        });
+
+        // Repeat button click listener
+        repeatButton.setOnClickListener(v -> {
+            isRepeat = !isRepeat; // Toggle repeat state
+            repeatButton.setImageResource(isRepeat ? R.drawable.repeaton : R.drawable.repeat);
+        });
+
+        // Dropdown button click listener (to minimize the entire application)
+        dropdownButton.setOnClickListener(v -> {
+            moveTaskToBack(true); // Minimize the entire application
         });
 
         // SeekBar change listener
@@ -100,23 +130,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeMediaPlayer() {
         if (mediaPlayer != null) {
-            mediaPlayer.release(); // Release previous media player if exists
+            mediaPlayer.release();
         }
-        int resourceId = getResources().getIdentifier(musicFiles[currentTrackIndex], "raw", getPackageName());
+        @SuppressLint("DiscouragedApi") int resourceId = getResources().getIdentifier(musicFiles[currentTrackIndex], "raw", getPackageName());
         mediaPlayer = MediaPlayer.create(this, resourceId);
 
-        // Change the track image based on the current track
+        // Change track image and title
         trackImageView.setImageResource(trackImages[currentTrackIndex]);
+        titleView.setText(trackTitles[currentTrackIndex]);
+        seekBar.setProgress(0);
+
+        // Set up completion listener to handle repeat and shuffle
+        mediaPlayer.setOnCompletionListener(mp -> {
+            if (isRepeat) {
+                mediaPlayer.start(); // Repeat the same track
+            } else if (isShuffle) {
+                currentTrackIndex = random.nextInt(musicFiles.length);
+                initializeMediaPlayer();
+                mediaPlayer.start();
+            } else {
+                playNextTrack();
+            }
+        });
     }
 
     private void playNextTrack() {
-        currentTrackIndex = (currentTrackIndex + 1) % musicFiles.length; // Loop back to first track if at the end
+        currentTrackIndex = (currentTrackIndex + 1) % musicFiles.length;
         initializeMediaPlayer();
         mediaPlayer.start();
     }
 
     private void playPreviousTrack() {
-        currentTrackIndex = (currentTrackIndex - 1 + musicFiles.length) % musicFiles.length; // Loop back to last track if at the start
+        currentTrackIndex = (currentTrackIndex - 1 + musicFiles.length) % musicFiles.length;
         initializeMediaPlayer();
         mediaPlayer.start();
     }

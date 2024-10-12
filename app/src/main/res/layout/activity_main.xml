@@ -1,96 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AEBDCA"
-    android:backgroundTint="#E8DFCA">
-
-    <!-- Set a default image -->
+    android:background="@drawable/background"
+    android:textAlignment="center">
 
     <ImageView
         android:id="@+id/trackImageView"
-        android:layout_width="399dp"
-        android:layout_height="312dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
         android:src="@drawable/peace"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603" />
+        app:layout_constraintVertical_bias="0.31" />
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="310dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="36dp"
-        android:backgroundTint="#7895B2"
+        android:layout_width="301dp"
+        android:layout_height="73dp"
         android:max="100"
         android:progress="0"
+        android:thumbTint="#000000"
         app:layout_constraintBottom_toTopOf="@+id/playPauseButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/trackImageView"
+        app:layout_constraintVertical_bias="0.372" />
 
-    <Button
-        android:id="@+id/playPauseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#7895B2"
-        android:text="Play"
+    <ImageButton
+        android:id="@+id/dropdownButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/media_minimized"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.806" />
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/dropdown"
+        tools:ignore="TouchTargetSizeCheck" />
 
-    <Button
+    <ImageButton
         android:id="@+id/previousButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#7895B2"
-        android:text="Previous"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="56dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/media_previous"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintEnd_toStartOf="@+id/playPauseButton"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.806" />
+        app:layout_constraintVertical_bias="0.894"
+        app:srcCompat="@drawable/previous" />
 
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#7895B2"
-        android:text="Next"
+    <ImageButton
+        android:id="@+id/playPauseButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/media_playing"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.879"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.806" />
+        app:layout_constraintVertical_bias="0.894"
+        app:srcCompat="@drawable/play" />
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/media_next"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/playPauseButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.894"
+        app:srcCompat="@drawable/next" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="463dp"
-        android:layout_height="102dp"
-        android:background="#7895B2"
-        android:backgroundTint="#AEBDCA"
-        android:paddingTop="40dp"
-        android:text="Music Player Pro Max"
+        android:id="@+id/titleView"
+        android:layout_width="135dp"
+        android:layout_height="58dp"
+        android:text="@string/title"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/trackImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TextSizeCheck" />
+
+    <TextView
+        android:id="@+id/appView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/uni_music_player"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/titleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.536" />
+
+    <ImageButton
+        android:id="@+id/shuffleButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/media_shuffle_on"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/previousButton"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.894"
+        app:srcCompat="@drawable/shuffle" />
+
+    <ImageButton
+        android:id="@+id/repeatButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/media_repeat_on"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/nextButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.894"
+        app:srcCompat="@drawable/repeat" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/media_selection"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/selection" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
